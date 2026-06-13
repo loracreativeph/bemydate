@@ -1,0 +1,9 @@
+{
+  "name": "ask-a-date",
+  "version": "1.0.0",
+  "dependencies": {
+    "mongoose": "^8.0.3",
+    "nanoid": "^3.3.7",
+    "nodemailer": "^6.9.7"
+  }
+}
