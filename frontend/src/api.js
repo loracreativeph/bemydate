@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://bemydate.onrender.com";
 
 // CREATE DATE REQUEST
 export const createDateRequest = (data) => {
