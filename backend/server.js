@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const DateRequest = require("./models/DateRequest");
 
 dotenv.config();
 
@@ -38,19 +39,18 @@ app.post("/api/date-request", async (req, res) => {
       theme,
     } = req.body;
 
-    const fakeId = Date.now().toString();
+    const dateRequest = await DateRequest.create({
+      askerName,
+      askerEmail,
+      receiverName,
+      receiverEmail,
+      theme,
+    });
 
     res.json({
       message: "Date request received 🚀",
-      link: `https://hibemydate.netlify.app/card/${fakeId}`,
-      data: {
-        id: fakeId,
-        askerName,
-        askerEmail,
-        receiverName,
-        receiverEmail,
-        theme,
-      },
+      link: `https://hibemydate.netlify.app/card/${dateRequest._id}`,
+      data: dateRequest,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -60,14 +60,9 @@ app.post("/api/date-request", async (req, res) => {
 // GET DATE REQUEST BY ID
 app.get("/api/date-request/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-
-    res.json({
-      _id: id,
-      askerName: "Jess",
-      receiverName: "Alex",
-      theme: "romantic",
-    });
+    const dateRequest = await DateRequest.findById(req.params.id);
+    if (!dateRequest) return res.status(404).json({ error: "Not found" });
+    res.json(dateRequest);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
