@@ -58,28 +58,19 @@ app.post("/api/date-request", async (req, res) => {
 });
 
 // GET DATE REQUEST BY ID
-app.get("/api/date-request/:id", async (req, res) => {
-  try {
-    const dateRequest = await DateRequest.findById(req.params.id);
-    if (!dateRequest) return res.status(404).json({ error: "Not found" });
-    res.json(dateRequest);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// RESPOND TO DATE REQUEST
 app.post("/api/date-request/:id/respond", async (req, res) => {
   try {
-    const { id } = req.params;
     const { chosenDate, foodVibe } = req.body;
 
-    res.json({
-      message: "Response saved 🚀",
-      id,
-      chosenDate,
-      foodVibe,
-    });
+    const dateRequest = await DateRequest.findByIdAndUpdate(
+      req.params.id,
+      { chosenDate, foodVibe, responded: true },
+      { new: true }
+    );
+
+    if (!dateRequest) return res.status(404).json({ error: "Not found" });
+
+    res.json({ message: "Response saved 💕", data: dateRequest });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
