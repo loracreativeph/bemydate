@@ -57,9 +57,11 @@ export default function Home() {
   return (
     <div className="page theme-romantic">
       <div className="card">
-
+        
         <h1>Ask Someone Out 💌</h1>
-
+        <p>Generate a cute date proposal card to share with your crush!</p>
+        <p>Choose your card theme:</p>
+        
         {/* THEME SELECT */}
         <div className="theme-grid">
           {THEMES.map((t) => (
@@ -84,12 +86,12 @@ export default function Home() {
             onChange={handleChange}
           />
 
-          <input
+          {/* <input
             name="askerEmail"
             placeholder="Your Email"
             value={form.askerEmail}
             onChange={handleChange}
-          />
+          /> */}
 
           <input
             name="receiverName"
@@ -98,12 +100,12 @@ export default function Home() {
             onChange={handleChange}
           />
 
-          <input
+          {/* <input
             name="receiverEmail"
             placeholder="Their Email"
             value={form.receiverEmail}
             onChange={handleChange}
-          />
+          /> */}
 
           {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
