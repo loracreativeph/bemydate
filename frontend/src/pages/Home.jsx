@@ -42,11 +42,11 @@ export default function Home() {
       const res = await createDateRequest(form);
 
       navigate('/link-generated', {
-      state: {
-        requestId: res.data._id,
-        receiverName: res.data.receiverName,
-      },
-    });
+        state: {
+          requestId: res.data._id,
+          receiverName: res.data.receiverName,
+        }
+      });
     } catch (err) {
       setError('Something went wrong. Please try again!');
     } finally {
