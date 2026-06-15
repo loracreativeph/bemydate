@@ -34,17 +34,17 @@ app.post("/api/date-request", async (req, res) => {
   try {
     const {
       askerName,
-      askerEmail,
+      // askerEmail,
       receiverName,
-      receiverEmail,
+      // receiverEmail,
       theme,
     } = req.body;
 
     const newRequest = await DateRequest.create({
       askerName,
-      askerEmail,
+      // askerEmail,
       receiverName,
-      receiverEmail,
+      // receiverEmail,
       theme,
     });
 

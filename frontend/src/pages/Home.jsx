@@ -16,7 +16,7 @@ export default function Home() {
     askerName: '',
     askerEmail: '',
     receiverName: '',
-    receiverEmail: '',
+    // receiverEmail: '',
     theme: 'romantic',
   });
 
@@ -29,9 +29,9 @@ export default function Home() {
   const handleSubmit = async () => {
     setError('');
 
-    const { askerName, askerEmail, receiverName, receiverEmail } = form;
+    const { askerName, askerEmail, receiverName } = form;
 
-    if (!askerName || !askerEmail || !receiverName || !receiverEmail) {
+    if (!askerName || !askerEmail || !receiverName) {
       setError('Please fill in all fields!');
       return;
     }
