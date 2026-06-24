@@ -1,55 +1,9 @@
-const { Brevo } = require("@getbrevo/brevo");
+const brevo = require("@getbrevo/brevo");
 
-const client = new Brevo({
-  apiKey: process.env.BREVO_API_KEY,
-});
+console.log("BREVO FULL:", brevo);
+console.log("Brevo:", brevo.Brevo);
+console.log("BrevoClient:", brevo.BrevoClient);
 
-const sendDateAcceptedEmail = async (
-  askerEmail,
-  askerName,
-  receiverName,
-  chosenDate,
-  foodVibe
-) => {
-  try {
-    const result = await client.sendEmail({
-      sender: {
-        name: "BeMyDate",
-        email: "bellacruz.ph@gmail.com",
-      },
-
-      to: [
-        {
-          email: askerEmail,
-          name: askerName,
-        },
-      ],
-
-      subject: "Your date request was accepted! 💕",
-
-      htmlContent: `
-        <h2>Good news, ${askerName}! 💌</h2>
-
-        <p>
-          <strong>${receiverName}</strong> accepted your date invitation!
-        </p>
-
-        <p>
-          <strong>Date:</strong> ${chosenDate}<br/>
-          <strong>Food Vibe:</strong> ${foodVibe}
-        </p>
-
-        <p>Have fun! 🌹</p>
-      `,
-    });
-
-    console.log("EMAIL SENT");
-    console.log(result);
-
-  } catch (error) {
-    console.error("EMAIL ERROR:");
-    console.error(error);
-  }
+module.exports = async () => {
+  console.log("debug");
 };
-
-module.exports = sendDateAcceptedEmail;
