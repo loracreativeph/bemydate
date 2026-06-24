@@ -1,4 +1,4 @@
-const sendDateAcceptedEmail = require("mailer");
+const sendDateAcceptedEmail = require("./sendEmail");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
