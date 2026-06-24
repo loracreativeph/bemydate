@@ -1,15 +1,4 @@
-const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  connectionTimeout: 10000,
-});
+const brevo = require("@getbrevo/brevo");
 
 const sendDateAcceptedEmail = async (
   askerEmail,
@@ -19,35 +8,38 @@ const sendDateAcceptedEmail = async (
   foodVibe
 ) => {
   try {
-    console.log("STEP 1");
+    const apiInstance = new brevo.TransactionalEmailsApi();
 
-    await transporter.verify();
+    apiInstance.setApiKey(
+      brevo.TransactionalEmailsApiApiKeys.apiKey,
+      process.env.BREVO_API_KEY
+    );
 
-    console.log("STEP 2");
-
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: askerEmail,
+    await apiInstance.sendTransacEmail({
+      sender: {
+        email: "bellacruz.ph@gmail.com",
+        name: "BeMyDate",
+      },
+      to: [
+        {
+          email: askerEmail,
+        },
+      ],
       subject: "Your date request was accepted! 💕",
-      html: `
+      htmlContent: `
         <h2>Good news, ${askerName}! 💌</h2>
-
-        <p><strong>${receiverName}</strong> accepted your date invitation!</p>
+        <p><strong>${receiverName}</strong> accepted your invitation!</p>
 
         <p>
-          <strong>Date:</strong> ${chosenDate}<br/>
+          <strong>Date:</strong> ${chosenDate}<br>
           <strong>Food Vibe:</strong> ${foodVibe}
         </p>
-
-        <p>Have fun! 🌹</p>
       `,
     });
 
-    console.log("STEP 3");
-    console.log("EMAIL SENT:", info.messageId);
-
+    console.log("EMAIL SENT");
   } catch (error) {
-    console.error("EMAIL ERROR:", error);
+    console.error(error);
   }
 };
 
