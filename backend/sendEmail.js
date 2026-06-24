@@ -15,23 +15,33 @@ const sendDateAcceptedEmail = async (
   chosenDate,
   foodVibe
 ) => {
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: askerEmail,
-    subject: "Your date request was accepted! 💕",
-    html: `
-      <h2>Good news, ${askerName}! 💌</h2>
+  try {
+    console.log("EMAIL_USER:", process.env.EMAIL_USER);
+    console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
 
-      <p><strong>${receiverName}</strong> accepted your date invitation!</p>
+    const info = await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: askerEmail,
+      subject: "Your date request was accepted! 💕",
+      html: `
+        <h2>Good news, ${askerName}! 💌</h2>
 
-      <p>
-        <strong>Date:</strong> ${chosenDate}<br/>
-        <strong>Food Vibe:</strong> ${foodVibe}
-      </p>
+        <p><strong>${receiverName}</strong> accepted your date invitation!</p>
 
-      <p>Have fun! 🌹</p>
-    `,
-  });
+        <p>
+          <strong>Date:</strong> ${chosenDate}<br/>
+          <strong>Food Vibe:</strong> ${foodVibe}
+        </p>
+
+        <p>Have fun! 🌹</p>
+      `,
+    });
+
+    console.log("Email sent successfully:", info.messageId);
+
+  } catch (error) {
+    console.error("EMAIL ERROR:", error);
+  }
 };
 
 module.exports = sendDateAcceptedEmail;
