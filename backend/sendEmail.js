@@ -39,9 +39,9 @@ const sendDateAcceptedEmail = async (
       },
       {
         headers: {
-          accept: "application/json",
-          "content-type": "application/json",
           "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
         },
       }
     );
