@@ -23,13 +23,41 @@ export default function FoodVibe() {
   }, [id]);
 
   const handleSubmit = async () => {
-    if (!foodVibe) { setError('Pick a vibe first! 🍽️'); return; }
+    if (!foodVibe) {
+      setError("Pick a vibe first! 🍽️");
+      return;
+    }
+
     setLoading(true);
+
     try {
-      await respondToDateRequest(id, { chosenDate: state?.chosenDate, foodVibe });
-      navigate(`/yay/${id}`, { state: { chosenDate: state?.chosenDate, foodVibe } });
-    } catch {
-      setError('Something went wrong, try again!');
+      console.log("Submitting...");
+      console.log("ID:", id);
+      console.log("Date:", state?.chosenDate);
+      console.log("Food:", foodVibe);
+
+      const response = await respondToDateRequest(id, {
+        chosenDate: state?.chosenDate,
+        foodVibe,
+      });
+
+      console.log("SUCCESS:", response.data);
+
+      navigate(`/yay/${id}`, {
+        state: {
+          chosenDate: state?.chosenDate,
+          foodVibe,
+        },
+      });
+
+    } catch (error) {
+      console.error("ERROR:", error);
+
+      setError(
+        error?.response?.data?.error ||
+        error.message ||
+        "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
