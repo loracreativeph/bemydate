@@ -1,3 +1,4 @@
+const sendDateAcceptedEmail = require("mailer");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -97,6 +98,14 @@ app.post("/api/date-request/:id/respond", async (req, res) => {
     if (!updated) {
       return res.status(404).json({ error: "Not found" });
     }
+
+    await sendDateAcceptedEmail(
+      updated.askerEmail,
+      updated.askerName,
+      updated.receiverName,
+      chosenDate,
+      foodVibe
+    );
 
     res.json({
       message: "Response saved 💕",
